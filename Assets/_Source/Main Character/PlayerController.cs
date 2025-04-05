@@ -1,44 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace _Source.Main_Character
 {
-    public float moveSpeed = 5f;
-    public float xAngle;
-    public float yAngle;
-    private Vector3 moveDirection;
-
-    void Update()
+    public class PlayerController : MonoBehaviour
     {
-        moveDirection = Vector3.zero;
+        [SerializeField] private float moveSpeed = 5f;
+        [SerializeField] private float xAngle = 1f;
+        [SerializeField] private float yAngle = 0.5f;
 
-        // Управление на WASD или стрелки
-        if (Input.GetKey(KeyCode.W))
+        private Rigidbody2D rb;
+        private Vector2 moveInput;
+        private Vector2 moveDirection;
+
+        private void Awake()
         {
-            moveDirection += new Vector3(xAngle, yAngle, 0);
+            rb = GetComponent<Rigidbody2D>();
         }
 
-        if (Input.GetKey(KeyCode.S))
+        private void Update()
         {
-            // Назад (вниз по изо)
-            moveDirection += new Vector3(-xAngle, -yAngle, 0);
+            moveInput = Vector2.zero;
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                moveInput += new Vector2(xAngle, yAngle);
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                moveInput += new Vector2(-xAngle, -yAngle);
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                moveInput += new Vector2(-xAngle, yAngle);
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                moveInput += new Vector2(xAngle, -yAngle);
+            }
+
+            moveInput = moveInput.normalized;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        private void FixedUpdate()
         {
-            // Влево (влево по изо)
-            moveDirection += new Vector3(-xAngle, yAngle, 0);
+            rb.velocity = moveInput * moveSpeed;
         }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            // Вправо (вправо по изо)
-            moveDirection += new Vector3(xAngle, -yAngle, 0);
-        }
-
-        moveDirection.Normalize(); // Чтобы скорость была одинаковая по диагонали
-
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
 }
