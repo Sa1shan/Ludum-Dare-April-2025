@@ -10,7 +10,7 @@ public class UISwitcher : MonoBehaviour
     [SerializeField] private TMP_Text gameObjectText;
     [SerializeField] private List<string> texts = new List<string>(); // Список текстов
     [SerializeField] private float textSpeed = 0.05f; // Скорость анимации
-    private const string NextSceneName = "SampleScene"; // Имя сцены для перехода
+    private const string NextSceneName = "GlobalScene"; // Имя сцены для перехода
     [SerializeField] private GameObject page1;
 
     private int _currentTextIndex = 0;
