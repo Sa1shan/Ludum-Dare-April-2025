@@ -1,35 +1,44 @@
-using UnityEngine;
-using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization; // Для перехода между сценами
+using UnityEngine.UI;
 
-public class UISwitcher : MonoBehaviour
+
+namespace _Source.Switch_UI_On_Start_Scene
 {
-    [SerializeField] private TMP_Text gameObjectText;
-    [SerializeField] private List<string> texts = new List<string>(); // Список текстов
-    [SerializeField] private float textSpeed = 0.05f; // Скорость анимации
-    private const string MainGameplaySceneName = "GlobalScene"; // Имя сцены для перехода
-    [SerializeField] private GameObject page1;
-
-    private int _currentTextIndex = 0;
-    private bool _isAnimating = false;
-    private bool _isLastTextReached = false;
-
-    private void Start()
+    public class UISwitcher : MonoBehaviour
     {
-        if (texts.Count <= 0) return;
-        gameObjectText.text = "";
-        StartCoroutine(TextAnimation(texts[_currentTextIndex]));
-    }
+        [SerializeField] private TMP_Text gameObjectText;
+        [SerializeField] private List<string> texts = new List<string>(); // Список текстов
+        [SerializeField] private float textSpeed = 0.05f; // Скорость анимации
+        [SerializeField] private GameObject page1;
+        [SerializeField] private Button nextSceneButton;
+        [SerializeField] private TMP_Text pressMouseText;
+        
+        private const string MainGameplaySceneName = "GlobalScene"; // Имя сцены для перехода
+        private int _currentTextIndex = 0;
+        private bool _isAnimating = false;
+        private bool _isLastTextReached = false;
+        private void Start()
+        {
+            if (texts.Count <= 0)
+            {
+                return;
+            }
+            gameObjectText.text = "";
+            StartCoroutine(TextAnimation(texts[_currentTextIndex]));
+        }
 
-    private void Update()
-    {
-        // Если нажата левая кнопка мыши
-        if (!Input.GetMouseButtonDown(0) || page1 == null || !page1.activeInHierarchy) 
-            return;
-        // Если анимация идёт – пропустить её
+        private void Update()
+        {
+            // Если нажата левая кнопка мыши
+            if (!Input.GetMouseButtonDown(0) || page1 == null || !page1.activeInHierarchy)
+            {
+                return;
+            } 
+            // Если анимация идёт – пропустить её
             if (_isAnimating)
             {
                 StopAllCoroutines();
@@ -38,56 +47,72 @@ public class UISwitcher : MonoBehaviour
 
                 // Если это последний текст – разрешить переход
                 if (_currentTextIndex == texts.Count - 1)
+                {
                     _isLastTextReached = true;
+                    
+                    nextSceneButton.gameObject.SetActive(true);
+                    pressMouseText.gameObject.SetActive(false);
+                }
             }
             // Если анимация завершена – переключить текст или сцену
             else
             {
                 if (_isLastTextReached)
                 {
-                    MainGameplaySceneLoad();
+                    // MainGameplaySceneLoad();
+                    Debug.Log("Reached the last text");
                 }
                 else
                 {
                     ShowNextText();
                 }
             }
-    }
-
-
-    private void ShowNextText()
-    {
-        if (texts.Count == 0) return;
-
-        _currentTextIndex++;
-        gameObjectText.text = "";
-
-        // Если это последний текст – включить флаг
-        if (_currentTextIndex == texts.Count - 1)
-            _isLastTextReached = true;
-
-        StartCoroutine(TextAnimation(texts[_currentTextIndex]));
-    }
-
-    private IEnumerator TextAnimation(string fullText)
-    {
-        _isAnimating = true;
-
-        foreach (var letter in fullText)
-        {
-            gameObjectText.text += letter;
-            yield return new WaitForSeconds(textSpeed);
         }
 
-        _isAnimating = false;
-    }
 
-    private static void MainGameplaySceneLoad()
-    {
-        if (!string.IsNullOrEmpty(MainGameplaySceneName))
+        private void ShowNextText()
         {
-            SceneManager.LoadScene(MainGameplaySceneName);
+            if (texts.Count == 0) return;
+
+            _currentTextIndex++;
+            gameObjectText.text = "";
+
+            // Если это последний текст – включить флаг
+            if (_currentTextIndex == texts.Count - 1)
+            {
+                _isLastTextReached = true;
+            }
+
+            StartCoroutine(TextAnimation(texts[_currentTextIndex]));
         }
-        
+
+        private IEnumerator TextAnimation(string fullText)
+        {
+            _isAnimating = true;
+
+            foreach (var letter in fullText)
+            {
+                gameObjectText.text += letter;
+                yield return new WaitForSeconds(textSpeed);
+            }
+
+            _isAnimating = false;
+            
+            if (_currentTextIndex == texts.Count - 1)
+            {
+                _isLastTextReached = true;
+                    
+                nextSceneButton.gameObject.SetActive(true);
+                pressMouseText.gameObject.SetActive(false);
+            }
+        }
+
+        private static void MainGameplaySceneLoad()
+        {
+            if (!string.IsNullOrEmpty(MainGameplaySceneName))
+            {
+                SceneManager.LoadScene(MainGameplaySceneName);
+            }
+        }
     }
 }
