@@ -7,6 +7,7 @@ namespace _Source.Main_Character
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float xAngle = 1f;
         [SerializeField] private float yAngle = 0.5f;
+        [SerializeField] private GameObject flashLight;
 
         private Rigidbody2D rb;
         private Vector2 moveInput;
