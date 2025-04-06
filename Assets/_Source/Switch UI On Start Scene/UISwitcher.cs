@@ -10,7 +10,7 @@ public class UISwitcher : MonoBehaviour
     [SerializeField] private TMP_Text gameObjectText;
     [SerializeField] private List<string> texts = new List<string>(); // Список текстов
     [SerializeField] private float textSpeed = 0.05f; // Скорость анимации
-    private const string NextSceneName = "GlobalScene"; // Имя сцены для перехода
+    private const string MainGameplaySceneName = "GlobalScene"; // Имя сцены для перехода
     [SerializeField] private GameObject page1;
 
     private int _currentTextIndex = 0;
@@ -45,7 +45,7 @@ public class UISwitcher : MonoBehaviour
             {
                 if (_isLastTextReached)
                 {
-                    LoadNextScene();
+                    MainGameplaySceneLoad();
                 }
                 else
                 {
@@ -82,11 +82,11 @@ public class UISwitcher : MonoBehaviour
         _isAnimating = false;
     }
 
-    private static void LoadNextScene()
+    private static void MainGameplaySceneLoad()
     {
-        if (!string.IsNullOrEmpty(NextSceneName))
+        if (!string.IsNullOrEmpty(MainGameplaySceneName))
         {
-            SceneManager.LoadScene(NextSceneName);
+            SceneManager.LoadScene(MainGameplaySceneName);
         }
         
     }
