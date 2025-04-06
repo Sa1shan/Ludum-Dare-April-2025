@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,28 +10,38 @@ public class TempSlider : MonoBehaviour
     private Slider slider;
     [SerializeField]
     private float time = 60f;
-    private float decreaseRate;
+    private float _decreaseRate;
     [SerializeField] private float addTemperature;
+    [SerializeField] private ShowAddedTemp tempDisplay;
 
-    public void Addtemp()
+    public void AddTemp()
     {
         slider.value += addTemperature;
+        if (tempDisplay != null)
+        {
+            tempDisplay.ShowTemp(addTemperature);
+        }
     }
 
-    void Start()
+    public void ShowAddedTemp(TMP_Text addedTempTMPText)
+    {
+        addedTempTMPText.gameObject.SetActive(true);
+    }
+
+    private void Start()
     {
         if (slider != null)
         {
             slider.value = slider.maxValue;
-            decreaseRate = slider.maxValue / time;
+            _decreaseRate = slider.maxValue / time;
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (slider != null && slider.value > 0)
         {
-            slider.value -= decreaseRate * Time.deltaTime;
+            slider.value -= _decreaseRate * Time.deltaTime;
 
             if (slider.value <= 0)
             {
@@ -40,8 +51,8 @@ public class TempSlider : MonoBehaviour
         }
     }
 
-    void Death()
+    private static void Death()
     {
-        Debug.Log("Èãðîê çàì¸ðç!");
+        Debug.Log("Ð˜Ð³Ñ€Ð¾Ðº Ð·Ð°Ð¼Ñ‘Ñ€Ð·!");
     }
 }
