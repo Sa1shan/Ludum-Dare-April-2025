@@ -3151,7 +3151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d7c2e9733354940942f64b381fc264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenenumber: 0
+  mainGameplaySceneNumber: 1
 --- !u!114 &1487122016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4077,7 +4077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d7c2e9733354940942f64b381fc264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenenumber: 0
+  mainGameplaySceneNumber: 0
 --- !u!1 &2009455519
 GameObject:
   m_ObjectHideFlags: 0
