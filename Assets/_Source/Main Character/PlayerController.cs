@@ -20,6 +20,11 @@ namespace _Source.Main_Character
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                flashLight.SetActive(!flashLight.activeSelf);
+            }
+            
             moveInput = Vector2.zero;
 
             if (Input.GetKey(KeyCode.W))
