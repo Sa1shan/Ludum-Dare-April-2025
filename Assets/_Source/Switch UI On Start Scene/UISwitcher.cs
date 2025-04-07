@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
@@ -17,7 +18,6 @@ namespace _Source.Switch_UI_On_Start_Scene
         [SerializeField] private Button nextSceneButton;
         [SerializeField] private TMP_Text pressMouseText;
         
-        private const string MainGameplaySceneName = "GlobalScene"; // Имя сцены для перехода
         private int _currentTextIndex = 0;
         private bool _isAnimating = false;
         private bool _isLastTextReached = false;
@@ -104,14 +104,6 @@ namespace _Source.Switch_UI_On_Start_Scene
                     
                 nextSceneButton.gameObject.SetActive(true);
                 pressMouseText.gameObject.SetActive(false);
-            }
-        }
-
-        private static void MainGameplaySceneLoad()
-        {
-            if (!string.IsNullOrEmpty(MainGameplaySceneName))
-            {
-                SceneManager.LoadScene(MainGameplaySceneName);
             }
         }
     }
