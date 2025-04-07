@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace _Source.Main_Character
@@ -5,13 +6,9 @@ namespace _Source.Main_Character
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float moveSpeed = 5f;
-        [SerializeField] private float xAngle = 1f;
-        [SerializeField] private float yAngle = 0.5f;
         [SerializeField] private GameObject flashLight;
 
         private Rigidbody2D rb;
-        private Vector2 moveInput;
-        private Vector2 moveDirection;
 
         private void Awake()
         {
@@ -24,35 +21,35 @@ namespace _Source.Main_Character
             {
                 flashLight.SetActive(!flashLight.activeSelf);
             }
-            
-            moveInput = Vector2.zero;
-
-            if (Input.GetKey(KeyCode.W))
-            {
-                moveInput += new Vector2(xAngle, yAngle);
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                moveInput += new Vector2(-xAngle, -yAngle);
-            }
-
-            if (Input.GetKey(KeyCode.A))
-            {
-                moveInput += new Vector2(-xAngle, yAngle);
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                moveInput += new Vector2(xAngle, -yAngle);
-            }
-
-            moveInput = moveInput.normalized;
         }
 
         private void FixedUpdate()
         {
-            rb.velocity = moveInput * moveSpeed;
+            Vector2 inputVector = new Vector2(0, 0);
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                inputVector.y = 1f;
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                inputVector.y = -1f;
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                inputVector.x = -1f;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                inputVector.x = 1f;
+            }
+
+            inputVector = inputVector.normalized;
+            
+            rb.MovePosition(rb.position + inputVector * (moveSpeed * Time.fixedDeltaTime));
         }
     }
 }
