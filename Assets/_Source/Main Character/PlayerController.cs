@@ -7,14 +7,15 @@ namespace _Source.Main_Character
     {
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private GameObject flashLight;
-
+        private PlayerInputActions _playerInputActions;
         private Rigidbody2D rb;
-
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
         }
-
+        
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.T))
@@ -25,30 +26,8 @@ namespace _Source.Main_Character
 
         private void FixedUpdate()
         {
-            Vector2 inputVector = new Vector2(0, 0);
-
-            if (Input.GetKey(KeyCode.W))
-            {
-                inputVector.y = 1f;
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                inputVector.y = -1f;
-            }
-
-            if (Input.GetKey(KeyCode.A))
-            {
-                inputVector.x = -1f;
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                inputVector.x = 1f;
-            }
-
+            Vector2 inputVector = GameInput.Instance.GetMovementVector();
             inputVector = inputVector.normalized;
-            
             rb.MovePosition(rb.position + inputVector * (moveSpeed * Time.fixedDeltaTime));
         }
     }
