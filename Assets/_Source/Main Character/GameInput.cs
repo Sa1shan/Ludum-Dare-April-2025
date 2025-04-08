@@ -27,4 +27,10 @@ public class GameInput : MonoBehaviour
         Vector3 mousePosition = Mouse.current.position.ReadValue();
         return mousePosition;
     }
+    public Vector3 GetMouseWorldPosition()
+    {
+        Vector3 screenPos = Input.mousePosition;
+        screenPos.z = Camera.main.nearClipPlane; // или 0 если 2D
+        return Camera.main.ScreenToWorldPoint(screenPos);
+    }
 }
