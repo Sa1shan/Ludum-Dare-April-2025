@@ -1,24 +1,30 @@
 using UnityEngine;
 
-public class LightRotate : MonoBehaviour
+namespace _Source.Main_Character
 {
-    private Camera _mainCamera;
-
-    private void Start()
+    public class LightRotate : MonoBehaviour
     {
-        _mainCamera = Camera.main;
-    }
+        private Camera _mainCamera;
 
-    private void Update()
-    {
-        RotateTowardsMouse();
-    }
+        private void Start()
+        {
+            _mainCamera = Camera.main;
+        }
 
-    private void RotateTowardsMouse()
-    {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = mousePosition - gameObject.transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        private void Update()
+        {
+            RotateTowardsMouse();
+        }
+
+        private void RotateTowardsMouse()
+        {
+            Vector3 mouseScreenPosition = Input.mousePosition;
+            mouseScreenPosition.z = Mathf.Abs(_mainCamera.transform.position.z); // или расстояние от камеры до объекта
+
+            Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
+            Vector2 direction = mouseWorldPosition - transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+        }
     }
 }
