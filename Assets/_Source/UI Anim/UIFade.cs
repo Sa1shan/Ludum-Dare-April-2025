@@ -1,7 +1,6 @@
 using _Source.Vlad;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UI;
 
 namespace _Source.UI_Anim
 {
