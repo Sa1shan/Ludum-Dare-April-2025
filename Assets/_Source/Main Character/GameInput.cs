@@ -29,7 +29,7 @@ namespace _Source.Main_Character
         public Vector3 GetMouseWorldPosition()
         {
             Vector3 screenPos = Input.mousePosition;
-            screenPos.z = Camera.main.nearClipPlane; // или 0 если 2D
+            screenPos.z = Camera.main.nearClipPlane;
             return Camera.main.ScreenToWorldPoint(screenPos);
         }
     }
