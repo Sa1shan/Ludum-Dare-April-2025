@@ -1,123 +1,124 @@
 using System.Collections;
-using System.Collections.Generic;
-using _Source.Vlad;
 using TMPro;
 using UnityEngine;
 
-public class Minigame : MonoBehaviour
+namespace _Source.Vlad
 {
-    [SerializeField] private GameObject minigamePanel;
-    [SerializeField] private RectTransform barArea;
-    [SerializeField] private RectTransform arrow;
-    [SerializeField] private RectTransform successZone;
-    [SerializeField] private TMP_Text cooldownText;
-
-    [SerializeField] private float arrowSpeed = 200f;
-    [SerializeField] private float cooldownTime = 20f;
-
-    private TempSlider _tempPanel;
-    private bool _isActive = false;
-    private bool _isOnCooldown = false;
-    private bool _movingRight = true;
-    private float _currentCooldown;
-
-    private void Start()
+    public class Minigame : MonoBehaviour
     {
-        _tempPanel = FindObjectOfType<TempSlider>();
-        cooldownText.text = "Нажмите <P>, чтобы согреться!";
-        cooldownText.gameObject.SetActive(true);
-    }
+        [SerializeField] private GameObject minigamePanel;
+        [SerializeField] private RectTransform barArea;
+        [SerializeField] private RectTransform arrow;
+        [SerializeField] private RectTransform successZone;
+        [SerializeField] private TMP_Text cooldownText;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P) && !_isActive && !_isOnCooldown)
+        [SerializeField] private float arrowSpeed = 200f;
+        [SerializeField] private float cooldownTime = 20f;
+
+        private TempSlider _tempPanel;
+        private bool _isActive = false;
+        private bool _isOnCooldown = false;
+        private bool _movingRight = true;
+        private float _currentCooldown;
+
+        private void Start()
         {
-            StartMiniGame();
+            _tempPanel = FindObjectOfType<TempSlider>();
+            cooldownText.text = "Нажмите <P>, чтобы согреться!";
+            cooldownText.gameObject.SetActive(true);
         }
 
-        if (_isActive)
+        private void Update()
         {
-            MoveArrow();
-
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.P) && !_isActive && !_isOnCooldown)
             {
-                CheckSuccess();
+                StartMiniGame();
             }
-        }
+
+            if (_isActive)
+            {
+                MoveArrow();
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    CheckSuccess();
+                }
+            }
         
-        if (_isOnCooldown)
-        {
-            _currentCooldown -= Time.deltaTime;
-            cooldownText.text = $"Можно согреться через: {Mathf.Ceil(_currentCooldown)} сек";
-            
-            if (_currentCooldown <= 0)
+            if (_isOnCooldown)
             {
-                _isOnCooldown = false;
-                cooldownText.text = "Нажмите <P>, чтобы согреться!";
+                _currentCooldown -= Time.deltaTime;
+                cooldownText.text = $"Можно согреться через: {Mathf.Ceil(_currentCooldown)} сек";
+            
+                if (_currentCooldown <= 0)
+                {
+                    _isOnCooldown = false;
+                    cooldownText.text = "Нажмите <P>, чтобы согреться!";
+                }
             }
         }
-    }
 
-    private void StartMiniGame()
-    {
-        cooldownText.gameObject.SetActive(false);
-        _isActive = true;
-        minigamePanel.SetActive(true);
-        arrow.anchoredPosition = new Vector2(-barArea.rect.width / 2f, arrow.anchoredPosition.y);
-        _movingRight = true;
-    }
-
-    private void EndMiniGame()
-    {
-        _isActive = false;
-        minigamePanel.SetActive(false);
-        _isOnCooldown = true;
-        _currentCooldown = cooldownTime;
-        cooldownText.gameObject.SetActive(true);
-    }
-
-    private IEnumerator CooldownRoutine()
-    {
-        yield return new WaitForSeconds(cooldownTime);
-        _isOnCooldown = false;
-        cooldownText.gameObject.SetActive(false);
-    }
-
-    private void MoveArrow()
-    {
-        var step = arrowSpeed * Time.deltaTime * (_movingRight ? 1 : -1);
-        arrow.anchoredPosition += new Vector2(step, 0);
-
-        var halfWidth = barArea.rect.width / 2f;
-
-        if (arrow.anchoredPosition.x > halfWidth)
+        private void StartMiniGame()
         {
-            arrow.anchoredPosition = new Vector2(halfWidth, arrow.anchoredPosition.y);
-            _movingRight = false;
-        }
-        else if (arrow.anchoredPosition.x < -halfWidth)
-        {
-            arrow.anchoredPosition = new Vector2(-halfWidth, arrow.anchoredPosition.y);
+            cooldownText.gameObject.SetActive(false);
+            _isActive = true;
+            minigamePanel.SetActive(true);
+            arrow.anchoredPosition = new Vector2(-barArea.rect.width / 2f, arrow.anchoredPosition.y);
             _movingRight = true;
         }
-    }
 
-    private void CheckSuccess()
-    {
-        var arrowX = arrow.anchoredPosition.x;
-        var zoneLeft = successZone.anchoredPosition.x - (successZone.rect.width / 16f);
-        var zoneRight = successZone.anchoredPosition.x + (successZone.rect.width / 16f);
-
-        if (arrowX >= zoneLeft && arrowX <= zoneRight)
+        private void EndMiniGame()
         {
-            Debug.Log("Успех!");
-            _tempPanel.AddTemp();
-        }
-        else
-        {
-            Debug.Log("Провал!");
+            _isActive = false;
+            minigamePanel.SetActive(false);
+            _isOnCooldown = true;
+            _currentCooldown = cooldownTime;
+            cooldownText.gameObject.SetActive(true);
         }
 
-        EndMiniGame();
+        private IEnumerator CooldownRoutine()
+        {
+            yield return new WaitForSeconds(cooldownTime);
+            _isOnCooldown = false;
+            cooldownText.gameObject.SetActive(false);
+        }
+
+        private void MoveArrow()
+        {
+            var step = arrowSpeed * Time.deltaTime * (_movingRight ? 1 : -1);
+            arrow.anchoredPosition += new Vector2(step, 0);
+
+            var halfWidth = barArea.rect.width / 2f;
+
+            if (arrow.anchoredPosition.x > halfWidth)
+            {
+                arrow.anchoredPosition = new Vector2(halfWidth, arrow.anchoredPosition.y);
+                _movingRight = false;
+            }
+            else if (arrow.anchoredPosition.x < -halfWidth)
+            {
+                arrow.anchoredPosition = new Vector2(-halfWidth, arrow.anchoredPosition.y);
+                _movingRight = true;
+            }
+        }
+
+        private void CheckSuccess()
+        {
+            var arrowX = arrow.anchoredPosition.x;
+            var zoneLeft = successZone.anchoredPosition.x - (successZone.rect.width / 16f);
+            var zoneRight = successZone.anchoredPosition.x + (successZone.rect.width / 16f);
+
+            if (arrowX >= zoneLeft && arrowX <= zoneRight)
+            {
+                Debug.Log("Успех!");
+                _tempPanel.AddTemp();
+            }
+            else
+            {
+                Debug.Log("Провал!");
+            }
+
+            EndMiniGame();
+        }
     }
 }

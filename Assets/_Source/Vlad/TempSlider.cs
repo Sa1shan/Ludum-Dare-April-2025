@@ -6,13 +6,11 @@ namespace _Source.Vlad
 {
     public class TempSlider : MonoBehaviour
     {
-        [SerializeField]
-        private Slider slider;
-        [SerializeField]
-        private float time = 60f;
-        private float _decreaseRate;
+        [SerializeField] private Slider slider;
+        [SerializeField] private float time = 60f;
         [SerializeField] private float addTemperature;
         [SerializeField] private ShowAddedTemp tempDisplay;
+        private float _decreaseRate;
 
         public void AddTemp()
         {

@@ -1,8 +1,7 @@
-using System.Net.NetworkInformation;
 using TMPro;
 using UnityEngine;
 
-namespace _Source.UI_ANim
+namespace _Source.UI_Anim
 {
     public class PanelAnim : MonoBehaviour
     {
@@ -51,12 +50,10 @@ namespace _Source.UI_ANim
                 Invoke("ShowTemPanel", 10f);
                 isShowText = true;
             }
-            bool isEndAll = false;
             if (isShowText)
             {
                 Invoke("HideText", 15f);
                 Invoke("HideTempText", 26f);
-                isEndAll = true;
             }
         }
         

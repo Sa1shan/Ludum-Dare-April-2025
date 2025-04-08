@@ -1,9 +1,9 @@
-using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Source.UI_ANim
+namespace _Source.UI_Anim
 {
     public class AnimDoTween : MonoBehaviour
     {
