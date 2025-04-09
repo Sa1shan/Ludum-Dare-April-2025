@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using _Source.InteractiableObj;
 using DG.Tweening;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace _Source.UI_Anim
     {
         [SerializeField] private Image messege;
         [SerializeField] private Text messegeText;
+        [SerializeField] private List<GameObject> interactiableObj;
         
         void Start()
         {
@@ -18,6 +20,7 @@ namespace _Source.UI_Anim
             Color c = messegeText.color;
             c.a = 0f;
             messegeText.color = c;
+            DisableSecondUsing(true);
         }
 
         void Update()
@@ -35,12 +38,25 @@ namespace _Source.UI_Anim
             {
                 Invoke("SetActive", 4f);
             }
+
+            if (CheckActive.Instance.isExit)
+            {
+                DisableSecondUsing(false);
+            }
         }
 
         void SetActive()
         {
             messege.DOFade(0f, 2f);
             messegeText.DOFade(0f, 2f);
+        }
+
+        void DisableSecondUsing(bool disable)
+        {
+            foreach (GameObject obj in interactiableObj)
+            {
+                obj.SetActive(disable);
+            }
         }
     }
 }
