@@ -15,5 +15,11 @@ namespace _Source.UI_Logic
         {
             SceneManager.LoadScene(mainGameplaySceneNumber);
         }
+
+        public void LoadSceneAfterDeath()
+        {
+            SceneManager.LoadScene(mainGameplaySceneNumber);
+            SceneLaunchTracker.HadSceneBeenLoadBefore = true;
+        }
     }
 }

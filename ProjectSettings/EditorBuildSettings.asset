@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Presentation/Scenes/GlobalScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/_Presentation/Scenes/GlobalScene 2.unity
+    guid: 40521a0be196b3940a07bff9544a34c6
   m_configObjects: {}

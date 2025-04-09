@@ -6,19 +6,14 @@ namespace _Source.UI_Logic
 {
     public class TutorialOff : MonoBehaviour
     {
-        [SerializeField] private GameObject uIController;
+        [SerializeField] private GameObject uIAnimController;
 
-        void Start()
+        void Awake()
         {
             if (SceneLaunchTracker.HadSceneBeenLoadBefore)
             {
-                Destroy(uIController);
+                Destroy(uIAnimController);
             }
-        }
-        public void OffTutorialScripts()
-        {
-            SceneManager.LoadScene("GlobalScene 1");
-            SceneLaunchTracker.HadSceneBeenLoadBefore = true;
         }
     }
 }

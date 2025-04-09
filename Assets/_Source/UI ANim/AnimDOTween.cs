@@ -1,5 +1,4 @@
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +9,8 @@ namespace _Source.UI_Anim
         [SerializeField] private Image image;
         [SerializeField] private float startPosX;
         [SerializeField] private float endPosX;
-        [SerializeField] private TextMeshProUGUI text;
-        [SerializeField] private string textToDisplay;
+        [SerializeField] private Text text;
+        [TextArea] [SerializeField] private string textToDisplay;
         private Sequence _sequence; // Храним _sequence, чтобы можно было отменить при необходимости
         private Tween _currentTween;
         private bool _isFirstMessageShown = false;
