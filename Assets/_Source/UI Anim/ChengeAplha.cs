@@ -11,8 +11,8 @@ namespace _Source.UI_Anim
         [SerializeField] private Image messege;
         [SerializeField] private Text messegeText;
         [SerializeField] private List<GameObject> interactiableObj;
-        
-        void Start()
+
+        private void Start()
         {
             Color color = messege.color;
             color.a = 0f;
@@ -45,13 +45,13 @@ namespace _Source.UI_Anim
             }
         }
 
-        void SetActive()
+        private void SetActive()
         {
             messege.DOFade(0f, 2f);
             messegeText.DOFade(0f, 2f);
         }
 
-        void DisableSecondUsing(bool disable)
+        private void DisableSecondUsing(bool disable)
         {
             foreach (GameObject obj in interactiableObj)
             {
