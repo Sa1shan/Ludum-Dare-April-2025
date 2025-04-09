@@ -1,23 +1,32 @@
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 
 namespace _Source.InteractiableObj
 {
     public class Interactiable : MonoBehaviour
     {
         [SerializeField] private GameObject player;
-        [SerializeField] private GameObject messages;
+        [SerializeField] private Image eMessages;
+        [SerializeField] private Text eText;
+        [SerializeField] private Image messagesSmth;
         
+        private bool onTriggerEnter = false;
         private void Start()
         {
-            messages.SetActive(false);
+            Color color = messagesSmth.color;
+            color.a = 0f;
+            messagesSmth.color = color;
+            eMessages.gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Player"))
             {
+                onTriggerEnter = true;
                 Debug.Log("Player entered");
-                messages.SetActive(true);
+                eMessages.gameObject.SetActive(true);
             }
         }
 
@@ -25,19 +34,22 @@ namespace _Source.InteractiableObj
         {
             if (collision.CompareTag("Player"))
             {
-                if (messages.activeSelf)
-                {
-                    messages.SetActive(false);
-                }
+                eMessages.gameObject.SetActive(false);
             }
         }
         
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && onTriggerEnter)
             {
-                messages.SetActive(false);
+                eMessages.gameObject.SetActive(false);
                 CheckActive.Instance.IsActiveHm = true;
+                CheckActive.Instance.isExit = true;
+            }
+
+            if (messagesSmth.color.a != 0f)
+            {
+                eMessages.gameObject.SetActive(false);
             }
         }
     }
