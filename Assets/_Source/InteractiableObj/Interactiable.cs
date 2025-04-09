@@ -1,3 +1,4 @@
+using _Source.UI_Anim;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
@@ -6,17 +7,15 @@ namespace _Source.InteractiableObj
 {
     public class Interactiable : MonoBehaviour
     {
-        [SerializeField] private GameObject player;
         [SerializeField] private Image eMessages;
         [SerializeField] private Text eText;
-        [SerializeField] private Image messagesSmth;
-        
-        private bool onTriggerEnter = false;
+        [SerializeField] private string interactText; // уникальный текст для каждого объекта
+        [SerializeField] private ChengeAplha chengeAlpha;
+
+        private bool playerInZone = false;
+
         private void Start()
         {
-            Color color = messagesSmth.color;
-            color.a = 0f;
-            messagesSmth.color = color;
             eMessages.gameObject.SetActive(false);
         }
 
@@ -24,8 +23,8 @@ namespace _Source.InteractiableObj
         {
             if (collision.CompareTag("Player"))
             {
-                onTriggerEnter = true;
-                Debug.Log("Player entered");
+                playerInZone = true;
+                eText.text = "Нажмите E";
                 eMessages.gameObject.SetActive(true);
             }
         }
@@ -34,22 +33,18 @@ namespace _Source.InteractiableObj
         {
             if (collision.CompareTag("Player"))
             {
+                playerInZone = false;
                 eMessages.gameObject.SetActive(false);
             }
         }
-        
+
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E) && onTriggerEnter)
+            if (playerInZone && Input.GetKeyDown(KeyCode.E))
             {
                 eMessages.gameObject.SetActive(false);
-                CheckActive.Instance.IsActiveHm = true;
-                CheckActive.Instance.isExit = true;
-            }
-
-            if (messagesSmth.color.a != 0f)
-            {
-                eMessages.gameObject.SetActive(false);
+                chengeAlpha.ShowText(interactText);
+                gameObject.SetActive(false); // отключаем интерактив
             }
         }
     }

@@ -8,55 +8,40 @@ namespace _Source.UI_Anim
 {
     public class ChengeAplha : MonoBehaviour
     {
-        [SerializeField] private Image messege;
-        [SerializeField] private Text messegeText;
-        [SerializeField] private List<GameObject> interactiableObj;
+        [SerializeField] private Image messageImage;
+        [SerializeField] private Text messageText;
 
         private void Start()
         {
-            Color color = messege.color;
-            color.a = 0f;
-            messege.color = color;
-            Color c = messegeText.color;
-            c.a = 0f;
-            messegeText.color = c;
-            DisableSecondUsing(true);
+            // Устанавливаем альфа 0 при старте
+            SetAlpha(0f);
         }
 
-        void Update()
+        private void SetAlpha(float alpha)
         {
-            bool isfade = false;
-            if (CheckActive.Instance.IsActiveHm)
-            {
-                messege.DOFade(1f, 2f);
-                messegeText.DOFade(1f, 2f);
-                CheckActive.Instance.IsActiveHm = false;
-                isfade = true;
-            }
+            Color imgColor = messageImage.color;
+            imgColor.a = alpha;
+            messageImage.color = imgColor;
 
-            if (isfade)
-            {
-                Invoke("SetActive", 4f);
-            }
-
-            if (CheckActive.Instance.isExit)
-            {
-                DisableSecondUsing(false);
-            }
+            Color textColor = messageText.color;
+            textColor.a = alpha;
+            messageText.color = textColor;
         }
 
-        private void SetActive()
+        public void ShowText(string text)
         {
-            messege.DOFade(0f, 2f);
-            messegeText.DOFade(0f, 2f);
+            messageText.text = text;
+
+            messageImage.DOFade(1f, 2f);
+            messageText.DOFade(1f, 2f);
+
+            Invoke(nameof(HideText), 6f);
         }
 
-        private void DisableSecondUsing(bool disable)
+        private void HideText()
         {
-            foreach (GameObject obj in interactiableObj)
-            {
-                obj.SetActive(disable);
-            }
+            messageImage.DOFade(0f, 2f);
+            messageText.DOFade(0f, 2f);
         }
     }
 }
