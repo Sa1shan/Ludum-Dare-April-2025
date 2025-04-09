@@ -33,6 +33,7 @@ namespace _Source.Vlad
                 slider.value = slider.maxValue;
                 _decreaseRate = slider.maxValue / time;
             }
+            
         }
 
         private void Update()
@@ -40,18 +41,10 @@ namespace _Source.Vlad
             if (slider != null && slider.value > 0)
             {
                 slider.value -= _decreaseRate * Time.deltaTime;
-
-                if (slider.value <= 0)
-                {
-                    slider.value = 0;
-                    Death();
-                }
             }
+            
         }
 
-        private static void Death()
-        {
-            Debug.Log("Игрок замёрз!");
-        }
+        
     }
 }
