@@ -33,7 +33,6 @@ namespace _Source.UI_Anim
 
         private void PlaySequence()
         {
-            // Убиваем предыдущую последовательность, если она ещё идёт
             if (_sequence != null && _sequence.IsActive())
             {
                 _sequence.Kill();
@@ -41,29 +40,22 @@ namespace _Source.UI_Anim
 
             _sequence = DOTween.Sequence();
 
-            _sequence.AppendInterval(1f); // ждём перед началом
-
-            // 1. Прячем панель (анимация движения влево)
+            _sequence.AppendInterval(1f);
+            
             _sequence.Append(image.rectTransform.DOAnchorPosX(startPosX, 2f).SetEase(Ease.InOutQuad));
-
-            // 2. Меняем текст
+            
             _sequence.AppendCallback(() => ChangeText(textToDisplay));
-
-            // 3. Небольшая пауза перед показом
+            
             _sequence.AppendInterval(0.5f);
-
-            // 4. Показываем панель (анимация движения вправо)
+            
             _sequence.Append(image.rectTransform.DOAnchorPosX(endPosX, 2f).SetEase(Ease.InOutQuad));
-
-            // 5. Держим панель на экране немного
+            
             _sequence.AppendInterval(6f);
-
-            // 6. Снова прячем
+            
             _sequence.Append(image.rectTransform.DOAnchorPosX(startPosX, 2f).SetEase(Ease.InOutQuad));
-            // 7. После завершения всей последовательности — деактивируем панель
             _sequence.OnComplete(() =>
             {
-                image.gameObject.SetActive(false); // Отключаем объект, на котором висит этот скрипт
+                image.gameObject.SetActive(false);
             });
         }
 
