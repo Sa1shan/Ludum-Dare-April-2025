@@ -41,9 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: UI Layer
-    uniqueID: 3859029269
-    locked: 0
   - name: LightedObjects
     uniqueID: 2495391711
+    locked: 0
+  - name: InteractibleObjects
+    uniqueID: 3677537797
+    locked: 0
+  - name: UI Layer
+    uniqueID: 3859029269
     locked: 0
