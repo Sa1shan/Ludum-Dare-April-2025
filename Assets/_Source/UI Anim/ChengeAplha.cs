@@ -35,7 +35,7 @@ namespace _Source.UI_Anim
             messageImage.DOFade(1f, 2f);
             messageText.DOFade(1f, 2f);
 
-            Invoke(nameof(HideText), 6f);
+            Invoke(nameof(HideText), 3f);
         }
 
         private void HideText()
