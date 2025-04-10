@@ -9,8 +9,8 @@ namespace _Source.UI_Logic
     public class UISwitcher : MonoBehaviour
     {
         [SerializeField] private TMP_Text gameObjectText;
-        [SerializeField] private List<string> texts = new List<string>(); // Список текстов
-        [SerializeField] private float textSpeed = 0.05f; // Скорость анимации
+        [TextArea][SerializeField] private List<string> texts = new List<string>();
+        [SerializeField] private float textSpeed = 0.05f;
         [SerializeField] private GameObject page1;
         [SerializeField] private Button nextSceneButton;
         [SerializeField] private TMP_Text pressMouseText;
