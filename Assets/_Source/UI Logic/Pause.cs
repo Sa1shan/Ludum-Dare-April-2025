@@ -7,13 +7,13 @@ namespace _Source.UI_Logic
     {   
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject miniGameController;
-        [SerializeField] private GameObject vignette;
-        
-        
+        public GameObject Vignette { get; private set; }
+        public bool IsActive { get; private set; }
         private void Start()
         {
             pauseMenu.SetActive(false);
             miniGameController.GetComponent<Minigame>().enabled = true;
+            Vignette = GameObject.Find("Vignette");
         }
 
         void Update()
@@ -28,19 +28,15 @@ namespace _Source.UI_Logic
                 
                 bool isPaused = !pauseMenu.activeSelf;
                 pauseMenu.SetActive(isPaused);
-                bool isActive = vignette.activeSelf;
-                vignette.gameObject.SetActive(!isActive);
+                bool isActive = Vignette.activeSelf;
+                Vignette.gameObject.SetActive(!isActive);
                 Time.timeScale = isPaused ? 0 : 1;
 
                 if (isPaused)
                 {
                     miniGameController.GetComponent<Minigame>().enabled = true;
                 }
-                
-                
             }
-            
-            
         }
     }
 }
