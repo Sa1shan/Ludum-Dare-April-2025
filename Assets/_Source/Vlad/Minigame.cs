@@ -24,7 +24,7 @@ namespace _Source.Vlad
         private void Start()
         {
             _tempPanel = FindObjectOfType<TempSlider>();
-            cooldownText.text = "Нажмите <P>, чтобы согреться!";
+            cooldownText.text = "Нажмите [P], чтобы согреться!";
             cooldownText.gameObject.SetActive(true);
         }
 

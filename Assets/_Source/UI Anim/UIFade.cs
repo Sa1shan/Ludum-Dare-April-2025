@@ -40,9 +40,9 @@ namespace _Source.UI_Anim
             if (_fadeIn)
             {
                 tempSliderController.GetComponent<TempSlider>().enabled = true;
-                DOVirtual.DelayedCall(10f, () => // Подождать 2 секунды
+                DOVirtual.DelayedCall(5f, () => // Подождать 
                 {
-                    uIPanels.DOFade(0f, 3f); // Исчезновение
+                    uIPanels.DOFade(0f, 1f); // Исчезновение
                 });
             }
         }

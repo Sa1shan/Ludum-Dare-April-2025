@@ -1,32 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEngine.SceneManagement;
 
 namespace _Source.UI_Anim
 {
     public class SceneTransition : MonoBehaviour
-    { 
-        public Image fadeImage; // Альфа задаётся вручную в инспекторе
-        public float fadeDuration = 1f;
+    {
+        [SerializeField] private Image fadeImage; // Альфа по умолчанию = 0
+        [SerializeField] private float fadeDuration = 1f;
 
         private void Start()
         {
-            if (fadeImage.color.a > 0f)
-            {
-                // Включаем Image на всякий случай
-                fadeImage.gameObject.SetActive(true);
+            // Включаем Image, чтобы он был виден
+            fadeImage.gameObject.SetActive(true);
 
-                // Плавное появление
-                fadeImage.DOFade(0f, fadeDuration).OnComplete(() =>
-                {
-                    fadeImage.gameObject.SetActive(false);
-                });
-            }
-            else
+            // Получаем текущий цвет и устанавливаем альфу = 1
+            Color newColor = fadeImage.color;
+            newColor.a = 1f;
+            fadeImage.color = newColor;
+
+            // Плавное исчезновение
+            fadeImage.DOFade(0f, fadeDuration).OnComplete(() =>
             {
                 fadeImage.gameObject.SetActive(false);
-            }
+            });
         }
     }
 }

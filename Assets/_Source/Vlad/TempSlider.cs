@@ -42,9 +42,6 @@ namespace _Source.Vlad
             {
                 slider.value -= _decreaseRate * Time.deltaTime;
             }
-            
         }
-
-        
     }
 }
